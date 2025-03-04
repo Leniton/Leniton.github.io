@@ -5,14 +5,15 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "build": "next build",
     "start": "next start",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
-    "build": "next build",
     "lint": "next lint"
   },
   "dependencies": {
     "next": "15.1.7",
+    "next.js": "^1.0.3",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },
