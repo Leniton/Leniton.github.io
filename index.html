@@ -17,15 +17,18 @@
 
       <div class="window">
         <div class="titlebar">
-          <span class="dot red"></span>
-          <span class="dot yellow"></span>
-          <span class="dot green"></span>
-          <span class="title">guest@portfolio: ~/&mdash; bash</span>
+          <span class="tb-icon" aria-hidden="true">&gt;_</span>
+          <span class="title">guest@portfolio: ~&mdash; bash</span>
+          <span class="tb-controls" aria-hidden="true">
+            <span class="tb-btn">&minus;</span>
+            <span class="tb-btn">&#9633;</span>
+            <span class="tb-btn">&times;</span>
+          </span>
         </div>
 
         <div class="terminal" id="log" aria-label="Session log" aria-live="polite"></div>
 
-        <div class="terminal" style="flex:0 0 auto; padding-top:0; border-top:1px solid var(--border);">
+        <div class="cmdline">
           <div class="form-row">
             <span class="prompt">guest@portfolio</span><span class="dim">:</span><span class="path">~</span><span class="dim">$</span>
             <input class="input" id="cmd" autocomplete="off" autocapitalize="off" spellcheck="false" autofocus />
