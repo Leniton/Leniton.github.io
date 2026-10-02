@@ -209,7 +209,7 @@ log.addEventListener("click", () => input.focus());
 /* ---------- boot ---------- */
 
 (async function boot() {
-  logLine(`Last login: ${new Date().toString().slice(0, 24)} on ttys001`, "dim");
+  logLine(`Last login: ${new Date().toString().slice(0, 24)}`, "dim");
   logLine("", "dim");
   logLine(
     `<span class="dim">Type a command below and press Enter, or click a tab.</span>`,

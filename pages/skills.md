@@ -1,14 +1,19 @@
 ## languages
 
-  TypeScript  `[####################]` 98%
-  Go          `[#################  ]` 88%
-  Rust        `[##############    ]` 70%
-  Python      `[##########        ]` 50%
+  C# · C++ · Lua
 
-## frameworks
+## engines
 
-  React, Next.js, Svelte, Node, Tauri, Postgres, Docker, Nix
+  Unity
 
-## tools
+## systems
 
-  git, neovim, tmux, GitHub Actions, Terraform, Figma
+  Gameplay programming · editor tooling & developer tools · logging & diagnostics · UI/UX · performance optimisation · refactoring & reusable architecture
+
+## practices
+
+  OOP · SOLID · design patterns · Git · Jira
+
+## platforms
+
+  2D · web · mobile
