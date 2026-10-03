@@ -9,6 +9,3 @@
 **Based in**  Recife, Brazil — open to remote (UTC-3)
 **Focus**     Unity, C#, C++, Lua
 **Languages** Portuguese (native) · English (B2)
-
-# TODO: not in Draft.md — this page previously had a "Status" line (availability for freelance & open source work). Draft.md only says "open to remote" and states no availability, so nothing was carried over.
-# TODO: not in Draft.md — the previous tagline claimed "five years of shipping production apps, tooling and open source" and a focus on TypeScript/Go/Rust/Postgres. Draft.md says 4+ years in game development and does not mention those technologies, so both were replaced.

@@ -1,19 +1,14 @@
-## languages
+## Languages
+C# · C++ · Lua
 
-  C# · C++ · Lua
+## Engines
+Unity
 
-## engines
+## Systems
+Gameplay programming · editor tooling & developer tools · logging & diagnostics · UI/UX · performance optimisation · refactoring & reusable architecture
 
-  Unity
+## Practices
+OOP · SOLID · design patterns · Git · Jira
 
-## systems
-
-  Gameplay programming · editor tooling & developer tools · logging & diagnostics · UI/UX · performance optimisation · refactoring & reusable architecture
-
-## practices
-
-  OOP · SOLID · design patterns · Git · Jira
-
-## platforms
-
-  2D · web · mobile
+## Platforms
+2D · web · mobile
