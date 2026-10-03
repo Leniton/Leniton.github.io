@@ -13,6 +13,18 @@ const PAGES = {
 const TAB_ORDER = Object.keys(PAGES);
 const PROJECTS_DIR = "pages/projects/";
 
+/* keyed by tab id; add an entry here when a page is added to PAGES */
+const ICONS = {
+  about:
+    '<svg class="ic" viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="8" cy="5.4" r="2.6"/><path d="M2.8 14c0-2.7 2.3-4.3 5.2-4.3s5.2 1.6 5.2 4.3"/></svg>',
+  skills:
+    '<svg class="ic" viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M2 4.5h4.2M9.7 4.5H14M2 11.5h3.4M8.9 11.5H14"/><circle cx="8" cy="4.5" r="1.5"/><circle cx="7.1" cy="11.5" r="1.5"/></svg>',
+  projects:
+    '<svg class="ic" viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M1.8 4.4h4.3l1.3 1.7h6.8v6.3a1 1 0 0 1-1 1H2.8a1 1 0 0 1-1-1z"/></svg>',
+  contact:
+    '<svg class="ic" viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="1.8" y="3.6" width="12.4" height="8.8" rx="1.2"/><path d="M2.6 4.8 8 8.7l5.4-3.9"/></svg>',
+};
+
 const cmdHistory = [];
 let histIndex = -1;
 let activePage = "about";
@@ -141,7 +153,7 @@ function renderTabs() {
     (id) =>
       `<button class="tab" role="tab" id="tab-${id}" data-page="${id}" ` +
       `aria-selected="${id === activePage}" aria-controls="pane" ` +
-      `tabindex="${id === activePage ? 0 : -1}">${id}</button>`
+      `tabindex="${id === activePage ? 0 : -1}">${ICONS[id] || ""}${id}</button>`
   ).join("");
 }
 
