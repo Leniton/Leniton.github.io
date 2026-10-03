@@ -18,7 +18,6 @@ let histIndex = -1;
 let activePage = "about";
 let booted = false;
 let navigating = false;
-let firstRender = true;
 
 const esc = (s) =>
   String(s)
@@ -152,9 +151,6 @@ async function showDoc(file, tab) {
   syncURL(tab, file);
   pane.innerHTML = `<div class="md-p md-c">loading ${esc(file)}&hellip;</div>`;
   pane.innerHTML = await loadDoc(file);
-  /* the window scrolls as a whole, so bring the new page into view (except on boot) */
-  if (firstRender) firstRender = false;
-  else if (tab !== "projects") pane.scrollIntoView({ block: "start", behavior: "smooth" });
 }
 
 function showPage(id) {
