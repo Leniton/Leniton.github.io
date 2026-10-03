@@ -2,6 +2,7 @@ const log = document.getElementById("log");
 const tabsEl = document.getElementById("tabs");
 const pane = document.getElementById("pane");
 const input = document.getElementById("cmd");
+const form = document.getElementById("cmdform");
 
 const PAGES = {
   about: "pages/about.md",
@@ -12,9 +13,11 @@ const PAGES = {
 const TAB_ORDER = Object.keys(PAGES);
 const PROJECTS_DIR = "pages/projects/";
 
-const history = [];
+const cmdHistory = [];
 let histIndex = -1;
 let activePage = "about";
+let booted = false;
+let navigating = false;
 
 const esc = (s) =>
   String(s)
@@ -117,6 +120,23 @@ function logLine(html, cls = "") {
 
 /* ---------- pages ---------- */
 
+/* keep ?page= in sync so the url can be shared and the back button walks the pages */
+function syncURL(tab, file) {
+  if (navigating) return;
+  const slug = file.startsWith(PROJECTS_DIR)
+    ? file.slice(PROJECTS_DIR.length).replace(/\.md$/, "")
+    : null;
+  const url = new URL(location.href);
+  url.searchParams.set("page", slug ? `${tab}/${slug}` : tab);
+  url.search = url.search.replace(/%2F/g, "/");
+  try {
+    window.history[booted ? "pushState" : "replaceState"]({ page: tab }, "", url);
+  } catch {
+    /* history is blocked on file:// */
+  }
+  booted = true;
+}
+
 function renderTabs() {
   tabsEl.innerHTML = TAB_ORDER.map(
     (id) =>
@@ -129,6 +149,7 @@ function renderTabs() {
 async function showDoc(file, tab) {
   activePage = tab;
   renderTabs();
+  syncURL(tab, file);
   pane.innerHTML = `<div class="md-p md-c">loading ${esc(file)}&hellip;</div>`;
   pane.innerHTML = await loadDoc(file);
   pane.scrollTop = 0;
@@ -144,6 +165,15 @@ function showProject(slug) {
   const clean = slug.trim().toLowerCase();
   if (!/^[a-z0-9._-]+$/.test(clean)) return;
   return showDoc(`${PROJECTS_DIR}${clean}.md`, "projects");
+}
+
+/* ?page=<id> (or ?page=projects/<slug>) decides the page opened on load */
+function openFromURL() {
+  const id = (new URLSearchParams(location.search).get("page") || "").trim().toLowerCase();
+  if (PAGES[id]) return showPage(id);
+  const [tab, slug] = id.split("/");
+  if (tab === "projects" && slug) return showProject(slug);
+  return showPage("about");
 }
 
 /* ---------- commands ---------- */
@@ -162,23 +192,15 @@ function run(line) {
 /* ---------- events ---------- */
 
 input.addEventListener("keydown", (e) => {
-  if (e.key === "Enter") {
-    const line = input.value;
-    run(line);
-    if (line.trim()) {
-      history.push(line);
-      histIndex = history.length;
-    }
-    input.value = "";
-  } else if (e.key === "ArrowUp") {
-    if (!history.length) return;
+  if (e.key === "ArrowUp") {
+    if (!cmdHistory.length) return;
     histIndex = Math.max(0, histIndex - 1);
-    input.value = history[histIndex] ?? "";
+    input.value = cmdHistory[histIndex] ?? "";
     e.preventDefault();
   } else if (e.key === "ArrowDown") {
-    if (!history.length) return;
-    histIndex = Math.min(history.length, histIndex + 1);
-    input.value = history[histIndex] ?? "";
+    if (!cmdHistory.length) return;
+    histIndex = Math.min(cmdHistory.length, histIndex + 1);
+    input.value = cmdHistory[histIndex] ?? "";
     e.preventDefault();
   } else if (e.key === "Tab") {
     const match = TAB_ORDER.find((id) => id.startsWith(input.value.trim().toLowerCase()));
@@ -189,22 +211,34 @@ input.addEventListener("keydown", (e) => {
   }
 });
 
+form.addEventListener("submit", (e) => {
+  e.preventDefault();
+  const line = input.value;
+  run(line);
+  if (line.trim()) {
+    cmdHistory.push(line);
+    histIndex = cmdHistory.length;
+  }
+  input.value = "";
+});
+
 tabsEl.addEventListener("click", (e) => {
   const tab = e.target.closest(".tab");
-  if (tab) {
-    showPage(tab.dataset.page);
-    input.focus();
-  }
+  if (tab) showPage(tab.dataset.page);
 });
 
 pane.addEventListener("click", (e) => {
   const cmd = e.target.closest(".md-cmd");
   if (!cmd) return;
   run(cmd.dataset.cmd);
-  input.focus();
 });
 
-log.addEventListener("click", () => input.focus());
+addEventListener("popstate", () => {
+  /* showDoc syncs the url before its first await, so the flag only guards that call */
+  navigating = true;
+  openFromURL();
+  navigating = false;
+});
 
 /* ---------- boot ---------- */
 
@@ -216,6 +250,5 @@ log.addEventListener("click", () => input.focus());
     "dim"
   );
   renderTabs();
-  await showPage("about");
-  input.focus();
+  await openFromURL();
 })();
