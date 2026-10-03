@@ -29,10 +29,13 @@
         <div class="terminal" id="log" aria-label="Session log" aria-live="polite"></div>
 
         <div class="cmdline">
-          <div class="form-row">
-            <span class="prompt">leniton@portfolio</span><span class="dim">:</span><span class="path">~</span><span class="dim">$</span>
-            <input class="input" id="cmd" autocomplete="off" autocapitalize="off" spellcheck="false" />
-          </div>
+          <form class="form-row" id="cmdform">
+            <label class="prompt" for="cmd">leniton@portfolio<span class="dim">:</span><span class="path">~</span><span class="dim">$</span></label>
+            <div class="input-row">
+              <input class="input" id="cmd" autocomplete="off" autocapitalize="off" spellcheck="false" />
+              <button class="run" type="submit">run</button>
+            </div>
+          </form>
         </div>
 
         <div class="tabs" id="tabs" role="tablist" aria-label="Pages"></div>
