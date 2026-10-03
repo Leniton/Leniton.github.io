@@ -7,6 +7,7 @@
     --bold: #be8ef6;
     --italic: #77e2f8;
     --err: #f881b9;
+    --head: #ffd166;
     --dim: #8785a3;
     --text: #e9e8f3;
     --mono: "Cascadia Mono", "JetBrains Mono", "Fira Code", Menlo, Consolas, monospace;
@@ -16,7 +17,7 @@
 
   html, body {
     margin: 0;
-    height: 100%;
+    min-height: 100%;
     background: radial-gradient(circle at 50% 0%, #17173a 0%, var(--bg) 60%);
     color: var(--text);
     font-family: var(--mono);
@@ -41,13 +42,11 @@
     display: flex;
     justify-content: center;
     padding: 24px 16px;
-    height: 100%;
+    min-height: 100%;
   }
 
   .stack {
     width: min(900px, 100%);
-    height: 100%;
-    max-height: 92vh;
     display: flex;
     flex-direction: column;
     gap: 14px;
@@ -92,8 +91,6 @@
   }
 
   .window {
-    flex: 1;
-    min-height: 0;
     display: flex;
     flex-direction: column;
     background: var(--panel);
@@ -161,22 +158,8 @@
   }
 
   .terminal {
-    flex: 0 1 auto;
-    max-height: 34%;
-    overflow-y: auto;
-    scrollbar-gutter: stable;
     padding: 16px;
     line-height: 1.55;
-    scrollbar-width: thin;
-    scrollbar-color: var(--accent-dim) var(--panel);
-  }
-
-  .terminal::-webkit-scrollbar { width: 10px; }
-  .terminal::-webkit-scrollbar-track { background: var(--panel); }
-  .terminal::-webkit-scrollbar-thumb {
-    background: var(--accent-dim);
-    border: 2px solid var(--panel);
-    border-radius: 6px;
   }
 
   .prompt { color: var(--accent); }
@@ -200,8 +183,9 @@
 
   .input-row {
     display: flex;
-    align-items: center;
-    gap: 10px;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
   }
 
   .input {
@@ -217,7 +201,8 @@
 
   .run {
     flex: 0 0 auto;
-    padding: 4px 14px;
+    align-self: flex-start;
+    padding: 5px 14px;
     border: 1px solid var(--border);
     border-radius: 4px;
     background: #252546;
@@ -262,23 +247,10 @@
   .tab:focus-visible { outline: 1px solid var(--accent); outline-offset: -2px; }
 
   .pane {
-    flex: 1 1 0%;
-    min-height: 0;
-    overflow-y: auto;
-    scrollbar-gutter: stable;
     padding: 16px;
     line-height: 1.55;
     white-space: pre-wrap;
     border-top: 1px solid var(--border);
-    scrollbar-width: thin;
-    scrollbar-color: var(--accent-dim) var(--panel);
-  }
-  .pane::-webkit-scrollbar { width: 10px; }
-  .pane::-webkit-scrollbar-track { background: var(--panel); }
-  .pane::-webkit-scrollbar-thumb {
-    background: var(--accent-dim);
-    border: 2px solid var(--panel);
-    border-radius: 6px;
   }
 
   .md-p { min-height: 1.55em; }
@@ -288,8 +260,8 @@
     font-size: 1em;
     font-weight: 600;
     letter-spacing: 0.5px;
-    color: var(--accent);
-    text-transform: lowercase;
+    color: var(--head);
+    text-shadow: 0 0 10px rgba(255, 209, 102, 0.3);
   }
 
   .md-b { color: var(--bold); }
@@ -326,10 +298,9 @@
   @media (max-width: 560px) {
     html, body { font-size: 13px; }
     .screen { padding: 14px 10px; }
-    .stack { gap: 10px; max-height: 100%; }
+    .stack { gap: 10px; }
     .site-name { font-size: 18px; }
     .window { border-radius: 6px; }
     .terminal, .pane, .cmdline { padding: 12px; }
-    .terminal { max-height: 26%; }
     .tab { font-size: 12px; padding: 6px 9px; }
   }
